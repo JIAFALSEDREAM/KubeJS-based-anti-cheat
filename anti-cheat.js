@@ -148,7 +148,7 @@ PlayerEvents.chat((event) => {
       });
       server.tell(showMessage);
     } else {
-      server.tell("CheaterTag List is empty.");
+      server.tell("§4已触发反作弊玩家§6名单为空");
     }
   }
 });
