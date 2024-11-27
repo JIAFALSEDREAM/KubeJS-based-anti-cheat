@@ -9,7 +9,7 @@
 // 保存了在服务器内使用指令 /kubejs reload server_scripts 来热重载
 
 // 如何处理触发了反作弊的玩家
-// 可以设置为 "ban", "spectator_mode" 或 "clear_and_spectator_mode"
+// 可以设置为 "ban", "clear_and_ban", "spectator_mode" 或 "clear_and_spectator_mode"  (默认为"clear_and_spectator_mode")
 const how_to_deal = "clear_and_spectator_mode";
 
 // 引号内填入关键词（在聊天栏发送关键词时会发送作弊玩家名单）
@@ -19,20 +19,43 @@ const key_word = "cheater list";
 
 // 黑名单物品（需要的话自行添加）
 let c_item_and_block = [
-  "functionalstorage:creative_vending_upgrade",
-  "createaddition:creative_energy",
-  "create_sa:creative_filling_tank",
-  "ae2:creative_fluid_cell",
-  "create:creative_blaze_cake",
-  "create:creative_crate",
+  //机械动力
   "create:creative_motor",
-  "create_connected:creative_fluid_vessel",
-  "ae2:creative_energy_cell",
+  "create:creative_crate",
   "create:creative_fluid_tank",
-  "minecraft:command_block_minecart",
   "create:handheld_worldshaper",
+  "create:creative_blaze_cake",
+  //机械动力：CC&A
+  "createaddition:creative_energy",
+  //机械动力：物品附加
+  "create_sa:creative_filling_tank",
+  //机械动力：创意传动
+  "create_connected:creative_fluid_vessel",
+  //机械动力：火炮
   "createbigcannons:creative_autocannon_ammo_container",
+  //ClockWork
+  "vs_clockwork:creative_gravitron",
+  //mek
+  "mekanism:creative_bin",
+  "mekanism:creative_fluid_tank",
+  "mekanism:creative_energy_cube",
+  "mekanism:creative_chemical_tank",
+  //ae2
+  "ae2:creative_energy_cell",
+  "ae2:creative_fluid_cell",
+  //CC电脑
+  "computercraft:computer_command",
+  //功能性存储
+  "functionalstorage:creative_vending_upgrade",
+  //原版管理员用品
+  "minecraft:command_block_minecart",
+  "minecraft:structure_void",
+  "minecraft:barrier",
+  "minecraft:light",
 ];
+
+
+//以下为功能执行部分，非必要勿动！！！
 
 PlayerEvents.inventoryChanged((event) => {
   const { item, player, server } = event;
@@ -67,17 +90,21 @@ PlayerEvents.inventoryChanged((event) => {
       case "ban":
         server.runCommand(`ban ${player.name.string} §c持有${reason}\n物品ID：${item.id}`);
         break;
+      case "clear_and_ban":
+        player.inventory.clear(c_item_and_block);
+        server.runCommand(`ban ${player.name.string} §c持有${reason}\n物品ID：${item.id}`);
+        break;
       case "spectator_mode":
         serverPlayer.setGameMode("spectator");
         break;
       case "clear_and_spectator_mode":
-        player.inventory.clear();
+        player.inventory.clear(c_item_and_block);
         serverPlayer.setGameMode("spectator");
         break;
       default:
         // 无法识别会使用默认
         // 我朝怎么有笨比还能填错的
-        player.inventory.clear();
+        player.inventory.clear(c_item_and_block);
         serverPlayer.setGameMode("spectator");
         break;
     }
