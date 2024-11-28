@@ -91,20 +91,20 @@ PlayerEvents.inventoryChanged((event) => {
         server.runCommand(`ban ${player.name.string} §c持有${reason}\n物品ID：${item.id}`);
         break;
       case "clear_and_ban":
-        player.inventory.clear(c_item_and_block);
+        player.inventory.clear();
         server.runCommand(`ban ${player.name.string} §c持有${reason}\n物品ID：${item.id}`);
         break;
       case "spectator_mode":
         serverPlayer.setGameMode("spectator");
         break;
       case "clear_and_spectator_mode":
-        player.inventory.clear(c_item_and_block);
+        player.inventory.clear();
         serverPlayer.setGameMode("spectator");
         break;
       default:
         // 无法识别会使用默认
         // 我朝怎么有笨比还能填错的
-        player.inventory.clear(c_item_and_block);
+        player.inventory.clear();
         serverPlayer.setGameMode("spectator");
         break;
     }
