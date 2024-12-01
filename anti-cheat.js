@@ -145,7 +145,7 @@ PlayerEvents.inventoryChanged((event) => {
     if (item.nbt?.tags?.CustomPotionEffects) {
       if (
         item.nbt.tags.CustomPotionEffects.some(
-          (PotionEffects) => PotionEffects.Amplifier <= 0 || PotionEffects.Amplifier > 100
+          (PotionEffects) => PotionEffects.Amplifier < 0 || PotionEffects.Amplifier > 100
         )
       ) {
         handleIllegalItem(player, item, server, "§c异常药水等级物品");
