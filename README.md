@@ -4,7 +4,9 @@ A JS script is used to deal with players who get illegal items in their normal s
 
 基于KubeJS的反作弊脚本 -by JIAFALSEDREAM
 
-目前已经实现的功能： 非法药水等级检测， 非法物品和方块检测， 非法附魔等级检测， 非法属性检测
+目前已经实现的功能： 非法药水等级检测， 非法物品和方块检测， 非法附魔等级检测， 非法属性检测，遥控器讲台蓝图检测
+
+提醒：强烈建议提前告知玩家，遥控器讲台是禁止出现在蓝图文件中的，以避免产生不必要的纠纷
 
 未实现功能： 掉落物检测（其实马上就可以写但是我懒得动）
 
