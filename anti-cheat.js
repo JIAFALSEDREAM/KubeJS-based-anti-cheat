@@ -54,6 +54,10 @@ let c_item_and_block = [
   "minecraft:light",
 ];
 
+// 蓝图
+const create_schematic = "create:schematic"
+// 遥控器讲台
+const lectern_controller = "create:lectern_controller"
 
 //以下为功能执行部分，非必要勿动！！！
 
@@ -150,6 +154,19 @@ PlayerEvents.inventoryChanged((event) => {
       ) {
         handleIllegalItem(player, item, server, "§c异常药水等级物品");
       }
+    }
+
+    // 检查蓝图,禁用遥控器讲台
+    if (item.getId() == create_schematic) {
+      let path = "./schematics/uploaded/" + item.nbt?.Owner + "/" + item.nbt?.File
+      let nbt = NBTIO.read(path);
+      let blocks = nbt.get("blocks");
+      blocks.forEach(tag => {
+        if (tag.get("nbt").get("id") == lectern_controller) {
+          handleIllegalItem(player, item, server, "§遥控器讲台");
+          return
+        }
+      })
     }
   }
 });
