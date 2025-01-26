@@ -138,7 +138,7 @@ PlayerEvents.inventoryChanged((event) => {
     if (item.nbt?.tags?.AttributeModifiers) {
       if (
         item.nbt.tags.AttributeModifiers.some(
-          (modifier) => modifier.Amount <= 0 || modifier.Amount > 100
+          (modifier) => modifier.Amount > 100
         )
       ) {
         handleIllegalItem(player, item, server, "§c异常属性物品");
