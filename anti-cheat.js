@@ -122,9 +122,7 @@ PlayerEvents.inventoryChanged((event) => {
         serverPlayer.setGameMode("spectator");
         break;
     }
-    server.tell(
-      `§a检测到玩家 §6${player.name.string} \n§c持有${reason}\n物品ID：${item.id}\n§a已处理：${AntiCheatConfig.punishmentType}\n§7玩家信息已被存储\n请通知管理员进行处理`
-    );
+    server.tell(`§a检测到玩家 §6${player.name.string} \n§c持有${reason}\n物品ID：${item.id}\n§a已处理：${AntiCheatConfig.punishmentType}\n§7玩家信息已被存储\n请通知管理员进行处理`);
   }
 
   if (!player.hasPermissions(4)) {
@@ -134,23 +132,14 @@ PlayerEvents.inventoryChanged((event) => {
     } else if (item.enchantmentTags) {
       item.enchantmentTags.forEach((ench) => {
         if (ench.lvl > AntiCheatConfig.maxEnchantmentLevel) {
-          handleIllegalItem(
-            player,
-            item,
-            server,
-            `§c非法附魔物品\n附魔ID：${ench.id}\n附魔等级：${ench.lvl}`
-          );
+          handleIllegalItem(player, item, server, `§c非法附魔物品\n附魔ID：${ench.id}\n附魔等级：${ench.lvl}`);
         }
       });
     }
 
     // 检查异常属性
     if (item.nbt?.tags?.AttributeModifiers?.some) {
-      if (
-        item.nbt.tags.AttributeModifiers.some(
-          (modifier) => modifier.Amount > AntiCheatConfig.maxAttributeValue
-        )
-      ) {
+      if (item.nbt.tags.AttributeModifiers.some((modifier) => modifier.Amount > AntiCheatConfig.maxAttributeValue)) {
         handleIllegalItem(player, item, server, "§c异常属性物品");
       }
     }
@@ -158,11 +147,7 @@ PlayerEvents.inventoryChanged((event) => {
     // 检查异常药水等级
     if (item.nbt?.tags?.CustomPotionEffects?.some) {
       if (
-        item.nbt.tags.CustomPotionEffects.some(
-          (PotionEffects) =>
-            PotionEffects.Amplifier < AntiCheatConfig.potionEffectRange.min ||
-            PotionEffects.Amplifier > AntiCheatConfig.potionEffectRange.max
-        )
+        item.nbt.tags.CustomPotionEffects.some((PotionEffects) => PotionEffects.Amplifier < AntiCheatConfig.potionEffectRange.min || PotionEffects.Amplifier > AntiCheatConfig.potionEffectRange.max)
       ) {
         handleIllegalItem(player, item, server, "§c异常药水等级物品");
       }
@@ -189,8 +174,7 @@ PlayerEvents.chat((event) => {
 
   if (message.trim().toLowerCase() === AntiCheatConfig.cheatListKeyword) {
     if (server.persistentData.CheaterTag && Array.isArray(server.persistentData.CheaterTag.id)) {
-      let showMessage =
-        "\n（列表中的玩家已被反作弊脚本处理 处理方式见反作弊脚本相关设置）\n§4反作弊触发玩家:§r\n";
+      let showMessage = "\n（列表中的玩家已被反作弊脚本处理 处理方式见反作弊脚本相关设置）\n§4反作弊触发玩家:§r\n";
       server.persistentData.CheaterTag.id.forEach((item) => {
         showMessage += `玩家id: ${item.name} - 触发次数: ${item.count}\n`;
       });
